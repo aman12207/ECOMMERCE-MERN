@@ -6,13 +6,12 @@ const product = require('./routes/productRoute');
 
 const app = express();
 const dotenv = require('dotenv');
-console.log(dotenv.config());
 // created environment
 app.use(express.json()); // if we don't do that we will not be able to use req.body to access data
-dotenv.config({path:"config/config.env"})
+dotenv.config({path:"backend/config/config.env"})
 
 // connecting db
-// connectDB();
+connectDB();
 // using routes
 app.use('/api/v1',product)
 
