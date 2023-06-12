@@ -14,19 +14,31 @@ exports.createProduct = catchAsyncError(async (req, res, next) => {
   });
 });
 
-// get all product
+// Get All Product
 exports.getAllProducts = catchAsyncError(async (req, res, next) => {
-  const resultPerPage = 5;
-  const productCount = await Product.countDocuments();
-  const apiFeatures = new ApiFeatures(Product.find(), req.query)
+  const resultPerPage = 8;
+  const productsCount = await Product.countDocuments();
+
+  const apiFeature = new ApiFeatures(Product.find(), req.query)
     .search()
-    .filter()
-    .pagination(resultPerPage);
-  const products = await apiFeatures.query; // filtered =
+    .filter();
+
+  let products = await apiFeature.query;
+
+  let filteredProductsCount = products.length;
+  // console.log(products, filteredProductsCount);
+
+  apiFeature.pagination(resultPerPage);
+
+  products = await apiFeature.query.clone();
+  console.log(products,products.length);
+
   res.status(200).json({
     success: true,
     products,
-    productCount,
+    productsCount,
+    resultPerPage,
+    filteredProductsCount,
   });
 });
 
@@ -126,7 +138,8 @@ exports.deleteReview = catchAsyncError(async (req, res, next) => {
   if (!product) {
     return next(new ErrorHandler("Product not found", 404));
   }
-  const reviews = product.reviews.filter((review) => {          // create a new array which excludes the review we want to remove
+  const reviews = product.reviews.filter((review) => {
+    // create a new array which excludes the review we want to remove
     return review._id.toString() !== req.query.id.toString();
   });
   let sumOfRating = 0;
