@@ -1,4 +1,6 @@
-const app = require('./app')
+const app = require('./app');
+const connectDB = require('./config/database.js')
+const cloudinary = require("cloudinary");
 
 // Handling Uncaught Exception
 process.on("uncaughtException", (err) => {        //if we are accessing a variable which is not even declared like console.log(email)
@@ -7,6 +9,15 @@ process.on("uncaughtException", (err) => {        //if we are accessing a variab
   server.close(()=>{
     process.exit(1);
   })
+});
+
+// connecting db
+connectDB();
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 const server = app.listen(process.env.PORT,()=>{

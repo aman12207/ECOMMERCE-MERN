@@ -8,6 +8,7 @@ import MetaData from "../layout/MetaData";
 import Carousel from "react-material-ui-carousel";
 import { getProductDetails } from "../../actions/productAction";
 import ReviewCard from "./ReviewCard";
+import { clearErrors } from "../../actions/userAction";
 
 const ProductDetails = ({ match }) => {
   const dispatch = useDispatch();
@@ -35,8 +36,8 @@ const ProductDetails = ({ match }) => {
   useEffect(() => {
     if (error) {
       console.log(error);
-      return alert.error(error);
-      // dispatch(clearErrors());
+      alert.error(error);
+      dispatch(clearErrors());
     }
     dispatch(getProductDetails(match.params.id));
   }, [dispatch, error, alert, match.params.id]);

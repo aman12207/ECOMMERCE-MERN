@@ -5,12 +5,13 @@ const {register, login, logout, forgetPassword, resetPassword, getUserDetails, u
 
 router.route("/register").post(register);
 router.route("/login").post(login);
-router.route("/password/forgot").get(forgetPassword);
+router.route("/password/forgot").post(forgetPassword);
 router.route("/logout").get(logout);
 router.route("/password/reset/:token").put(resetPassword);
 router.route("/me").get(isAuthenticatedUser, getUserDetails);
 router.route("/password/update").put(isAuthenticatedUser, updatePassword);
-router.route("/password/updateProfile").put(isAuthenticatedUser, updateProfile);router
+router.route("/me/update").put(isAuthenticatedUser, updateProfile);
+router
 .route("/admin/users")
 .get(isAuthenticatedUser, authorizeRole("admin"), getAllUser);
 
