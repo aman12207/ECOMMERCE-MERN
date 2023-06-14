@@ -9,6 +9,7 @@ import Carousel from "react-material-ui-carousel";
 import { getProductDetails } from "../../actions/productAction";
 import ReviewCard from "./ReviewCard";
 import { clearErrors } from "../../actions/userAction";
+import { addItemsToCart } from "../../actions/cartAction";
 
 const ProductDetails = ({ match }) => {
   const dispatch = useDispatch();
@@ -27,6 +28,10 @@ const ProductDetails = ({ match }) => {
     if (1 >= quantity) return;
     setQuantity(quantity - 1);
   };
+  const addToCartHandler = () =>{
+    dispatch(addItemsToCart(match.params.id,quantity));
+    alert.success("Item Added To Cart");
+  }
   const options = {
     size: "large",
     value: product.ratings,
@@ -85,7 +90,7 @@ const ProductDetails = ({ match }) => {
                   </div>
                   <button
                     disabled={product.Stock < 1 ? true : false}
-                    // onClick={addToCartHandler}
+                    onClick={addToCartHandler}
                   >
                     Add to Cart
                   </button>

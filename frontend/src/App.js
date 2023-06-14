@@ -10,7 +10,7 @@ import Products from "./component/Product/Products";
 import Search from "./component/Product/Search";
 import LoginSignUp from "./component/User/LoginSignUp";
 import { useDispatch, useSelector } from "react-redux";
-import { loadUser, updatePassword, updateProfile } from "./actions/userAction";
+import { loadUser } from "./actions/userAction";
 import UserOptions from "./component/layout/Header/UserOptions";
 import Profile from "./component/User/Profile";
 import ProtectedRoute from "./component/Route/ProtectedRoute";
@@ -18,9 +18,9 @@ import UpdateProfile from "./component/User/UpdateProfile";
 import UpdatePassword from "./component/User/UpdatePassword";
 import ForgotPassword from "./component/User/ForgotPassword.js";
 import ResetPassword from "./component/User/ResetPassword.js";
-// import Cart from "./component/Cart/Cart";
-// import Shipping from "./component/Cart/Shipping";
-// import ConfirmOrder from "./component/Cart/ConfirmOrder";
+import Cart from "./component/Cart/Cart";
+import Shipping from "./component/Cart/Shipping.js";
+import ConfirmOrder from "./component/Cart/ConfirmOrder";
 // import axios from "axios";
 // import Payment from "./component/Cart/Payment";
 // import { Elements } from "@stripe/react-stripe-js";
@@ -71,11 +71,13 @@ function App() {
       <Route exact path="/password/forgot" component={ForgotPassword} />
 
 
-      {/* <Route exact path="/cart" component={Cart} />
+      <Route exact path="/cart" component={Cart} />
 
       <ProtectedRoute exact path="/shipping" component={Shipping} />
 
-      <ProtectedRoute exact path="/success" component={OrderSuccess} />
+      <ProtectedRoute exact path="/order/confirm" component={ConfirmOrder} />
+
+      {/* <ProtectedRoute exact path="/success" component={OrderSuccess} />
 
       <ProtectedRoute exact path="/orders" component={MyOrders} />
 

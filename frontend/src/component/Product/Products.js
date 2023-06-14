@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import MetaData from "../layout/MetaData";
 
 const categories = [
-  "laptop",
+  "Laptop",
   "Footwear",
   "Bottom",
   "Tops",
@@ -39,15 +39,16 @@ const Products = ({ match }) => {
     resultPerPage,
     filteredProductsCount,
   } = useSelector((state) => state.products);
-  console.log(
-    products,
-    loading,
-    error,
-    productsCount,
-    resultPerPage,
-    filteredProductsCount
-  );
+
   const keyword = match.params.keyword;
+
+  const setCurrentPageNo = (e) => {
+    setCurrentPage(e);
+  };
+
+  const priceHandler = (event, newPrice) => {
+    setPrice(newPrice);
+  };
   let count = filteredProductsCount;
 
   useEffect(() => {
@@ -79,9 +80,7 @@ const Products = ({ match }) => {
             <Typography>Price</Typography>
             <Slider
               value={price}
-              onChange={(event, newPrice) => {
-                setPrice(newPrice);
-              }}
+              onChange={priceHandler}
               valueLabelDisplay="auto"
               aria-labelledby="range-slider"
               min={0}
@@ -121,9 +120,7 @@ const Products = ({ match }) => {
                 activePage={currentPage}
                 itemsCountPerPage={resultPerPage}
                 totalItemsCount={productsCount}
-                onChange={(e) => {
-                  setCurrentPage(e);
-                }}
+                onChange={setCurrentPageNo}
                 nextPageText="Next"
                 prevPageText="Prev"
                 firstPageText="1st"

@@ -69,10 +69,9 @@ const LoginSignUp = ({ history, location }) => {
     }
   };
 
-  const redirect = location.search ? location.search.split("=")[1] : "/account";
+  const redirect = location.search ? location.search.split("=")[1] : "/account";      //locataion.search gives url starting with ?query=val  ?redirect=shipping
 
   useEffect(() => {
-    console.log("rerendered")
     if (error) {
       console.log(error);
       alert.error(error);
@@ -80,7 +79,7 @@ const LoginSignUp = ({ history, location }) => {
     }
 
     if (isAuthenticated) {
-      alert.success("Logged In Successfully");
+      console.log(redirect);
       history.push(redirect);
     }
   }, [dispatch, error, alert, history, isAuthenticated, redirect]);

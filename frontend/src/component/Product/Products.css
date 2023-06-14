@@ -10,10 +10,12 @@
 
 .products {
   display: flex;
+  margin: 2vmax auto;
+  width: 80vw;
   flex-wrap: wrap;
-  padding: 0 5vmax;
   justify-content: center;
-  min-height: 30vh;
+  max-width: 100%;
+  padding: 0 5vmax;
 }
 
 .paginationBox {
