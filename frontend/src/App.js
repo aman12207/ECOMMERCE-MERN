@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 import Header from "./component/layout/Header/Header";
@@ -21,29 +21,35 @@ import ResetPassword from "./component/User/ResetPassword.js";
 import Cart from "./component/Cart/Cart";
 import Shipping from "./component/Cart/Shipping.js";
 import ConfirmOrder from "./component/Cart/ConfirmOrder";
-// import axios from "axios";
-// import Payment from "./component/Cart/Payment";
-// import { Elements } from "@stripe/react-stripe-js";
-// import { loadStripe } from "@stripe/stripe-js";
-// import OrderSuccess from "./component/Cart/OrderSuccess";
-// import MyOrders from "./component/Order/MyOrders";
-// import OrderDetails from "./component/Order/OrderDetails";
+import axios from "axios";
+import Payment from "./component/Cart/Payment.js";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import OrderSuccess from "./component/Cart/OrderSuccess.js";
+import MyOrders from "./component/Order/MyOrders.js";
+import OrderDetails from "./component/Order/OrderDetails.js";
 // import Dashboard from "./component/Admin/Dashboard.js";
 // import ProductList from "./component/Admin/ProductList.js";
-// import NewProduct from "./component/Admin/NewProduct";
-// import UpdateProduct from "./component/Admin/UpdateProduct";
-// import OrderList from "./component/Admin/OrderList";
-// import ProcessOrder from "./component/Admin/ProcessOrder";
-// import UsersList from "./component/Admin/UsersList";
-// import UpdateUser from "./component/Admin/UpdateUser";
-// import ProductReviews from "./component/Admin/ProductReviews";
-// import Contact from "./component/layout/Contact/Contact";
-// import About from "./component/layout/About/About";
-// import NotFound from "./component/layout/Not Found/NotFound";
+// import NewProduct from "./component/Admin/NewProduct.js";
+// import UpdateProduct from "./component/Admin/UpdateProduct.js";
+// import OrderList from "./component/Admin/OrderList.js";
+// import ProcessOrder from "./component/Admin/ProcessOrder.js";
+// import UsersList from "./component/Admin/UsersList.js";
+// import UpdateUser from "./component/Admin/UpdateUser.js";
+// import ProductReviews from "./component/Admin/ProductReviews.js";
+// import Contact from "./component/layout/Contact/Contact.js";
+// import About from "./component/layout/About/About.js";
+// import NotFound from "./component/layout/Not Found/NotFound.js";
 
 function App() {
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector((state) => state.user);
+
+  const [stripeApiKey, setStripeApiKey] = useState("");
+  async function getStripeApiKey() {
+    const { data } = await axios.get("/api/v1/stripeapikey");
+    setStripeApiKey(data.stripeApiKey);
+  }
   useEffect(() => {
     WebFont.load({
       google: {
@@ -51,6 +57,7 @@ function App() {
       },
     });
     dispatch(loadUser());
+    getStripeApiKey();
   }, [dispatch]);
   return (
     <Router>
@@ -66,10 +73,13 @@ function App() {
       <ProtectedRoute exact path="/me/update" component={UpdateProfile} />
 
       <Route exact path="/password/reset/:token" component={ResetPassword} />
-      <ProtectedRoute exact path="/password/update" component={UpdatePassword}/>
+      <ProtectedRoute
+        exact
+        path="/password/update"
+        component={UpdatePassword}
+      />
 
       <Route exact path="/password/forgot" component={ForgotPassword} />
-
 
       <Route exact path="/cart" component={Cart} />
 
@@ -77,7 +87,13 @@ function App() {
 
       <ProtectedRoute exact path="/order/confirm" component={ConfirmOrder} />
 
-      {/* <ProtectedRoute exact path="/success" component={OrderSuccess} />
+      {stripeApiKey && (
+        <Elements stripe={loadStripe(stripeApiKey)}>
+          <ProtectedRoute exact path="/process/payment" component={Payment} />
+        </Elements>
+      )}
+
+      <ProtectedRoute exact path="/success" component={OrderSuccess} />
 
       <ProtectedRoute exact path="/orders" component={MyOrders} />
 
@@ -85,7 +101,7 @@ function App() {
 
       <ProtectedRoute exact path="/order/:id" component={OrderDetails} />
 
-      <ProtectedRoute
+      {/* <ProtectedRoute
         isAdmin={true}
         exact
         path="/admin/dashboard"
