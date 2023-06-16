@@ -2,11 +2,29 @@ const catchAsyncError = require("../middleware/catchAsyncError");
 const Product = require("../models/productModel");
 const ApiFeatures = require("../utils/apifeatures");
 const ErrorHandler = require("../utils/errorHandler");
+const cloudinary = require("cloudinary");
 
 // create product  -- Admin Route
 exports.createProduct = catchAsyncError(async (req, res, next) => {
+  let images = [];
+  if(typeof req.body.images == 'staring'){      // ie there is only 1 image
+    images.push(req.body.images);
+  }
+  else {
+    images = req.body.images
+  }
+  const imagesLinks = [];
+  for(let i = 0;i<images.length;i++){
+    const result = await cloudinary.v2.uploader.upload(images[i], {   // upload file on cloudinary
+      folder: "avatars",
+    });
+    imagesLinks.push({      // store its url in an array
+      public_id: result.public_id,
+      url: result.secure_url,
+    });
+  }
+  req.body.images = imagesLinks;
   req.body.user = req.user.id; // req.user stores the current logged in user model it is stored in authorizeRole middleware as it runs before this funcn
-  console.log(req.body, req.user);
   const product = await Product.create(req.body);
   res.status(201).json({
     success: true,
@@ -26,12 +44,10 @@ exports.getAllProducts = catchAsyncError(async (req, res, next) => {
   let products = await apiFeature.query;
 
   let filteredProductsCount = products.length;
-  // console.log(products, filteredProductsCount);
 
   apiFeature.pagination(resultPerPage);
 
   products = await apiFeature.query.clone();
-  console.log(products,products.length);
 
   res.status(200).json({
     success: true,
@@ -39,6 +55,15 @@ exports.getAllProducts = catchAsyncError(async (req, res, next) => {
     productsCount,
     resultPerPage,
     filteredProductsCount,
+  });
+});
+
+// Get All Product Admin
+exports.getAdminProducts = catchAsyncError(async (req, res, next) => {
+  const products = await Product.find();
+  res.status(200).json({
+    success: true,
+    products
   });
 });
 
@@ -125,7 +150,6 @@ exports.getProductReviews = catchAsyncError(async (req, res, next) => {
   if (!product) {
     return next(new ErrorHandler("Product not found", 404));
   }
-  console.log(product);
   res.status(200).json({
     success: true,
     reviews: product.reviews,

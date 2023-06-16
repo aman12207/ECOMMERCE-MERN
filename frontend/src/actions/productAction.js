@@ -46,10 +46,8 @@ export const getProduct =
         link = `/api/v1/products?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&category=${category}&ratings[gte]=${ratings}`;
       }
       const { data } = await axios(link);
-      console.log(data);
       dispatch({ type: ALL_PRODUCT_SUCCESS, payload: data });
     } catch (error) {
-      console.log(error.message);
       dispatch({
         type: ALL_PRODUCT_FAIL,
         payload: error.response.data.message || error.message,
@@ -63,7 +61,6 @@ export const getAdminProduct = () => async (dispatch) => {
     dispatch({ type: ADMIN_PRODUCT_REQUEST });
 
     const { data } = await axios.get("/api/v1/admin/products");
-
     dispatch({
       type: ADMIN_PRODUCT_SUCCESS,
       payload: data.products,

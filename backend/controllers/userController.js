@@ -124,7 +124,6 @@ exports.resetPassword = catchAsyncError(async (req, res, next) => {
 
 exports.getUserDetails = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(req.user.id);       // user will be authenticated, i.e req.user stores the whole user
-  // console.log(req.user,req.user.id,req.user._id,user);
   res.status(200).json({
     success: true,
     user: req.user, // as user is authenticated before calling this funcn so req.user stores the currently logged in user
@@ -142,20 +141,17 @@ exports.updatePassword = catchAsyncError(async (req, res, next) => {
   if (req.body.newPassword !== req.body.confirmPassword) {
     return next(new ErrorHandler("Password does not match", 400));
   }
-  console.log(req.body.newPassword);
   user.password = req.body.newPassword; // req.pre function will hash it
   await user.save();
   sendCookie(user, 200, res);
 });
 
 exports.updateProfile = catchAsyncError(async (req, res, next) => {
-  console.log(req.body);
   const newUserData = {
     name: req.body.name,
     email: req.body.email,
   };
   if(req.body.avatar){
-    console.log(req.body.avatar);
     const user = await User.findById(req.user.id);
     const imageId = user.avatar.public_id;
     await cloudinary.v2.uploader.destroy(imageId);      // destroy previous avatar image 
@@ -170,7 +166,6 @@ exports.updateProfile = catchAsyncError(async (req, res, next) => {
       url : myCloud.secure_url
     }
   }
-  console.log(req.body, newUserData);
   const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
     new: true,
     runValidators: true,
@@ -209,7 +204,6 @@ exports.updateUserRole = catchAsyncError(async (req, res, next) => {
     email: req.body.email,
     role: req.body.role,
   };
-  console.log(req.body, newUserData);
   const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
     new: true,
     runValidators: true,

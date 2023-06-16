@@ -16,7 +16,6 @@ const Home = () => {
 
   useEffect(() => {
     if (error) {
-      console.log(error);
       alert.error(error);
       return dispatch(clearErrors());
     }

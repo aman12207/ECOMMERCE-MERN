@@ -73,13 +73,11 @@ const LoginSignUp = ({ history, location }) => {
 
   useEffect(() => {
     if (error) {
-      console.log(error);
       alert.error(error);
       dispatch(clearErrors());
     }
 
     if (isAuthenticated) {
-      console.log(redirect);
       history.push(redirect);
     }
   }, [dispatch, error, alert, history, isAuthenticated, redirect]);

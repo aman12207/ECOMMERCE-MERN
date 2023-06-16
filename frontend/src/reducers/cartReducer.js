@@ -8,7 +8,7 @@ export const cartReducer = (state = { cartItems: [] , shippingInfo : {}}, action
   switch (action.type) {
     case ADD_TO_CART:
       const item = action.payload;
-      // as we are using the initail state in reducer we have to add cartItems in inital state of store
+      // as we are using the initial state in reducer we have to add cartItems in inital state of store
       const isItemExist = state.cartItems.find(
         (cartItem) => cartItem.product === item.product
       ); // if product is already in cart
