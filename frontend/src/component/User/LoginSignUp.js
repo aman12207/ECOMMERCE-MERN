@@ -185,6 +185,7 @@ const LoginSignUp = ({ history, location }) => {
                     name="avatar"
                     accept="image/*"
                     onChange={registerDataChange}
+                    required
                   />
                 </div>
                 <input type="submit" value="Register" className="signUpBtn" />
