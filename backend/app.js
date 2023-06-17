@@ -9,7 +9,7 @@ const app = express();
 const dotenv = require('dotenv');
 app.use(cors());            // to allow react app to make call
 // created environment
-dotenv.config({path:"backend/config/config.env"})
+dotenv.config({path:"config/config.env"})
 app.use(express.json()); // if we don't do that we will not be able to use req.body to access data
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended:true}));
