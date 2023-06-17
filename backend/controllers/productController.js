@@ -7,7 +7,7 @@ const cloudinary = require("cloudinary");
 // create product  -- Admin Route
 exports.createProduct = catchAsyncError(async (req, res, next) => {
   let images = [];
-  if(typeof req.body.images == 'staring'){      // ie there is only 1 image
+  if(typeof req.body.images == 'string'){      // ie there is only 1 image
     images.push(req.body.images);
   }
   else {

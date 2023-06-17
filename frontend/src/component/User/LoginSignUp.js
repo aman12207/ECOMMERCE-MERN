@@ -34,6 +34,7 @@ const LoginSignUp = ({ history, location }) => {
 
   const [avatar, setAvatar] = useState("/Profile.png");
   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
+  console.log(name,email,password,avatar);
 
   const loginSubmit = (e) => {
     e.preventDefault();
@@ -185,7 +186,6 @@ const LoginSignUp = ({ history, location }) => {
                     name="avatar"
                     accept="image/*"
                     onChange={registerDataChange}
-                    required
                   />
                 </div>
                 <input type="submit" value="Register" className="signUpBtn" />
