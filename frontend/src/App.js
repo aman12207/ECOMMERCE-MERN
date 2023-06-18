@@ -42,6 +42,7 @@ import ProductReviews from "./component/Admin/ProductReviews.js";
 import Contact from "./component/layout/Contact/Contact.js";
 import About from "./component/layout/About/About.js";
 import NotFound from "./component/layout/Not Found/NotFound";
+import ScrollToTopOnMount from "./utils/ScrollToTop";
 
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -79,7 +80,7 @@ function App() {
           <ProtectedRoute exact path="/process/payment" component={Payment} />
         </Elements>
       )}
-
+      <ScrollToTopOnMount/>
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/product/:id" component={ProductDetails} />

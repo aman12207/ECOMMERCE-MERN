@@ -40,7 +40,6 @@ import {
   USER_DETAILS_FAIL,
   CLEAR_ERRORS,
 } from "../constants/userConstants";
-import axios from "axios";
 
 export const userReducer = (state = { user: {} }, action) => {
   switch (action.type) {
