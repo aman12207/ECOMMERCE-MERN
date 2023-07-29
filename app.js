@@ -31,7 +31,7 @@ app.use('/api/v1', orderRoute);
 app.use('/api/v1', paymentRoute);
 
 // serving the frontend
-app.use(express.static(path.join(__dirname, "./frontend/build")));
+app.use(express.static(path.join(__dirname, "./frontend/build")))
 
 app.get("*", (req, res) => {
     res.sendFile(
