@@ -3,10 +3,6 @@
   "name": "native-server",
   "routes": [
     { "src": "/api/v1/(.*)", "dest": "server.js" },
-    { "src": "/(.*)", "dest": "server.js" },
-    {
-      "src": "/frontend/build/(.*)",
-      "dest": "/frontend/build/$1"
-    }
+    { "src": "/(.*)", "dest": "/frontend/build/index.html" }
   ]
 }
