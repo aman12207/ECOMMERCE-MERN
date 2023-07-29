@@ -11,5 +11,5 @@
       "use": "@vercel/static"
     }
   ],
-  "routes": [{ "src": "/(.*)", "dest": "/server.js" }],
+  "routes": [{ "src": "/(.*)", "dest": "/server.js" }]
 }
