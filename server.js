@@ -1,6 +1,7 @@
 const app = require('./app');
 const connectDB = require('./config/database.js')
 const cloudinary = require("cloudinary");
+const path = require('path');
 
 // Handling Uncaught Exception
 process.on("uncaughtException", (err) => {        //if we are accessing a variable which is not even declared like console.log(email)
