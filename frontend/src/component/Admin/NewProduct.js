@@ -64,6 +64,7 @@ const NewProduct = ({ history }) => {
     images.forEach((image) => {
       myForm.append("images", image);
     });
+    console.log(myForm.get, myForm.values);
     dispatch(createProduct(myForm));
   };
 

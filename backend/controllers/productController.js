@@ -26,6 +26,7 @@ exports.createProduct = catchAsyncError(async (req, res, next) => {
   req.body.images = imagesLinks;
   req.body.user = req.user.id; // req.user stores the current logged in user model it is stored in authorizeRole middleware as it runs before this funcn
   const product = await Product.create(req.body);
+  console.log(product);
   res.status(201).json({
     success: true,
     product,
