@@ -31,14 +31,15 @@ app.use("/api/v1", orderRoute);
 app.use("/api/v1", paymentRoute);
 
 // serving the frontend
-const _dirname = path.resolve();
-console.log(path.join(_dirname, "/frontend/build"));
+// const __dirname = path.resolve();
+console.log(path.join(__dirname, "/frontend/build"));
+console.log(path.resolve(__dirname, "frontend", "build", "index.html"));
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(_dirname, "/frontend/build")));
+  app.use(express.static(path.join(__dirname, "/frontend/build")));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(_dirname, "frontend", "build", "index.html"));
+    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
   });
 } else {
   app.get("/", (req, res) => {
@@ -47,11 +48,11 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // if(process){
-//     app.use(express.static(path.join(__dirname, "./frontend/build")))
+//     app.use(express.static(path.join(___dirname, "./frontend/build")))
 
 //     app.get("*", (req, res) => {
 //         res.sendFile(
-//             path.join(__dirname, "./frontend/build/index.html"),
+//             path.join(___dirname, "./frontend/build/index.html"),
 //             function (err) {
 //                 res.status(500).send(err)
 //             }
