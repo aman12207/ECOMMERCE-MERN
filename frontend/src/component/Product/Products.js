@@ -9,6 +9,7 @@ import Slider from "@material-ui/core/Slider";
 import { useAlert } from "react-alert";
 import Typography from "@material-ui/core/Typography";
 import MetaData from "../layout/MetaData";
+import Search from "./Search.js"
 
 const categories = [
   "Laptop",
@@ -26,7 +27,7 @@ const Products = ({ match }) => {
   const alert = useAlert();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [price, setPrice] = useState([0, 25000]);
+  const [price, setPrice] = useState([0, 100000]);
   const [category, setCategory] = useState("");
 
   const [ratings, setRatings] = useState(0);
@@ -67,13 +68,15 @@ const Products = ({ match }) => {
       ) : (
         <Fragment>
           <MetaData title="PRODUCTS -- ECOMMERCE" />
+          <Search/>
           <h2 className="productsHeading">Products</h2>
 
           <div className="products">
-            {products &&
+            {products.length>0 ? 
               products.map((product) => (
                 <ProductCard key={product._id} product={product} />
-              ))}
+              )) :
+              <h1>No Product Match Your Search Criteria</h1>}
           </div>
 
           <div className="filterBox">
@@ -84,7 +87,7 @@ const Products = ({ match }) => {
               valueLabelDisplay="auto"
               aria-labelledby="range-slider"
               min={0}
-              max={25000}
+              max={100000}
             />
 
             <Typography>Categories</Typography>

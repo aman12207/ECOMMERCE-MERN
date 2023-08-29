@@ -11,14 +11,28 @@ import { useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { logout } from "../../../actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
+import Loader from "../Loader/Loader.js"
 
 const UserOptions = ({ user }) => {
   const { cartItems } = useSelector((state) => state.cart);
+  const {loading, isAuthenticated } = useSelector((state) => state.user);
 
   const [open, setOpen] = useState(false);
   const history = useHistory();
   const alert = useAlert();
   const dispatch = useDispatch();
+  console.log(open);
+
+  if (!isAuthenticated) {
+    return (
+      loading? <Loader/> : 
+      <div className="button-container">
+        <button className="button" onClick={() => history.push("/login")}>
+          Login
+        </button>
+      </div>
+    );
+  }
 
   const options = [
     { icon: <ListAltIcon />, name: "Orders", func: orders },
@@ -36,7 +50,8 @@ const UserOptions = ({ user }) => {
   ];
 
   if (user.role === "admin") {
-    options.unshift({       // adding element at beginning of array
+    options.unshift({
+      // adding element at beginning of array
       icon: <DashboardIcon />,
       name: "Dashboard",
       func: dashboard,
@@ -44,6 +59,7 @@ const UserOptions = ({ user }) => {
   }
 
   function dashboard() {
+    setOpen(false);
     history.push("/admin/dashboard");
   }
 
@@ -57,6 +73,7 @@ const UserOptions = ({ user }) => {
     history.push("/cart");
   }
   function logoutUser() {
+    setOpen(false);
     dispatch(logout());
     alert.success("Logout Successfully");
   }

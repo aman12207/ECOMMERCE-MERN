@@ -45,7 +45,7 @@ import NotFound from "./component/layout/Not Found/NotFound";
 import ScrollToTopOnMount from "./utils/ScrollToTop";
 
 function App() {
-  const { isAuthenticated, user } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
 
   const [stripeApiKey, setStripeApiKey] = useState("");
 
@@ -73,7 +73,7 @@ function App() {
     <Router>
       <Header />
 
-      {isAuthenticated && <UserOptions user={user} />}
+      <UserOptions user={user} />
 
       {stripeApiKey && (
         <Elements stripe={loadStripe(stripeApiKey)}>
