@@ -12,6 +12,7 @@ import MetaData from "../layout/MetaData";
 import Search from "./Search.js"
 
 const categories = [
+  "Any",
   "Laptop",
   "Footwear",
   "Bottom",
@@ -50,6 +51,12 @@ const Products = ({ match }) => {
   const priceHandler = (event, newPrice) => {
     setPrice(newPrice);
   };
+
+  const handleClick = (temp) =>{
+    if(temp === "Any") setCategory("");
+    else
+    setCategory(temp);
+  }
   let count = filteredProductsCount;
 
   useEffect(() => {
@@ -96,7 +103,7 @@ const Products = ({ match }) => {
                 <li
                   className="category-link"
                   key={category}
-                  onClick={() => setCategory(category)}
+                  onClick={()=>handleClick(category)}
                 >
                   {category}
                 </li>
