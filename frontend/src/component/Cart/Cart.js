@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import "./Cart.css";
 import CartItemCard from "./CartItemCard.js";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,7 +7,7 @@ import { Typography } from "@material-ui/core";
 import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
 import { Link } from "react-router-dom";
 
-const Cart = ({ history }) => {
+const Cart = ({ history, getStripeApiKey }) => {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
 
@@ -34,6 +34,10 @@ const Cart = ({ history }) => {
   const checkoutHandler = () => {
     history.push("/login?redirect=shipping");
   };
+
+  useEffect(()=>{
+    getStripeApiKey();
+  },[getStripeApiKey])
 
   return (
     <Fragment>

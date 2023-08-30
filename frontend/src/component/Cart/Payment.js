@@ -18,6 +18,7 @@ import CreditCardIcon from "@material-ui/icons/CreditCard";
 import EventIcon from "@material-ui/icons/Event";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import { createOrder, clearErrors } from "../../actions/orderAction";
+import { clearCart } from "../../actions/cartAction";
 
 const Payment = ({ history }) => {
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
@@ -94,7 +95,7 @@ const Payment = ({ history }) => {
           };
 
           dispatch(createOrder(order));
-
+          dispatch(clearCart());
           history.push("/success");
         } else {
           alert.error("There's some issue while processing payment ");

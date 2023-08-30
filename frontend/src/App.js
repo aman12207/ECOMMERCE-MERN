@@ -63,7 +63,6 @@ function App() {
     });
 
     store.dispatch(loadUser());
-
     getStripeApiKey();
   }, []);
 
@@ -80,7 +79,7 @@ function App() {
           <ProtectedRoute exact path="/process/payment" component={Payment} />
         </Elements>
       )}
-      <ScrollToTopOnMount/>
+      <ScrollToTopOnMount />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/product/:id" component={ProductDetails} />
@@ -109,7 +108,11 @@ function App() {
 
         <Route exact path="/login" component={LoginSignUp} />
 
-        <Route exact path="/cart" component={Cart} />
+        <Route
+          exact
+          path="/cart"
+          render={(props) => <Cart {...props} getStripeApiKey={getStripeApiKey} authed={true} />}
+        />
 
         <ProtectedRoute exact path="/shipping" component={Shipping} />
 

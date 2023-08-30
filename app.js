@@ -31,9 +31,6 @@ app.use("/api/v1", orderRoute);
 app.use("/api/v1", paymentRoute);
 
 // serving the frontend
-// const __dirname = path.resolve();
-console.log(path.join(__dirname, "/frontend/build"));
-console.log(path.resolve(__dirname, "frontend", "build", "index.html"));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/frontend/build")));
@@ -46,19 +43,6 @@ if (process.env.NODE_ENV === "production") {
     res.send("API is running successfuly");
   });
 }
-
-// if(process){
-//     app.use(express.static(path.join(___dirname, "./frontend/build")))
-
-//     app.get("*", (req, res) => {
-//         res.sendFile(
-//             path.join(___dirname, "./frontend/build/index.html"),
-//             function (err) {
-//                 res.status(500).send(err)
-//             }
-//         )
-//     })
-// }
 
 // Error middleware
 app.use(errorMiddleware);

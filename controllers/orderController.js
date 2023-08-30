@@ -70,7 +70,6 @@ exports.getAllOrders = catchAsyncError(async (req, res, next) => {
 
 exports.updateOrder = catchAsyncError(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
-  console.log(order);
 
   if (!order) {
     return next(new ErrorHandler("Order not found with this Id", 404));

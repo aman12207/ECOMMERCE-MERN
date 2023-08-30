@@ -21,7 +21,6 @@ const UserOptions = ({ user }) => {
   const history = useHistory();
   const alert = useAlert();
   const dispatch = useDispatch();
-  console.log(open);
 
   if (!isAuthenticated) {
     return (
